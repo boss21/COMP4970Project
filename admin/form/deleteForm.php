@@ -1,3 +1,31 @@
+<?php
+// Initialize the session
+session_start();
+// If session variable is not set it will redirect to login page
+if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
+    header("location: login.php");
+    exit;
+}
+// Include config file
+include "../../dbconfig.php";
+
+$sql = "SELECT FormID FROM Forms";
+$sqlQueryResult = mysqli_query($link, $sql);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $formID = $_POST["FormID"];
+    $deleteFormSql = "DELETE FROM Forms WHERE FormID = '$formID'";
+
+    if (mysqli_query($link, $deleteFormSql)) {
+        echo "<script type='text/javascript'>alert('$formID successfully deleted!');</script>";
+        header("location: deleteForm.php");
+    } else {
+        echo "Oops! Something went wrong. Please try again later.";
+    }
+}
+
+mysqli_close($link);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,8 +53,13 @@
                 <br />
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group">
-                        <label>Form ID</label>
-                        <select id="form_ID" name="form_ID" class="form-control"></select>
+                        <label for="form_ID">Form ID</label>
+                        <select id="form_ID" name="form_ID" class="form-control"><?php
+                            while ($row = mysqli_fetch_array($sqlQueryResult)) {
+                                echo "<option value='" . $row['FormID'] . "'>" . $row['FormID'] . "</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
                     <input type="submit" value="Delete" class="btn btn-primary" />
                     <br />

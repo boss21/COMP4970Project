@@ -1,3 +1,24 @@
+<?php
+include '../../dbconfig.php';
+
+
+// Initialize the session
+session_start();
+// If session variable is not set it will redirect to login page
+if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
+    header("location: login.php");
+    exit;
+}
+
+$sql = "SELECT * FROM timeslots";
+$result = mysqli_query($link,$sql);
+if (!$result) {
+    printf("Error: %s\n", mysqli_error($link));
+    exit();
+}
+mysqli_close($link);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +45,17 @@
             <div class="col-sm-4 text-center">
                 <br />
                 <div>
-                    DISPLAY TIMESLOT DATA HERE
+                    <table border="1" style="width:100%; border-width:1px; margin-left: auto;	margin-right: auto;">
+						<tr>
+							<th>Timeslot ID</th>
+							<th>Timeslot</th> 
+						</tr>
+						<?php
+							while ($row = mysqli_fetch_array($result)) {
+								echo "<tr><td>".$row['TimeslotID']."</td><td>".$row['Timeslot']."</td></tr>";	
+							}
+						?>
+					</table>
                 </div>
                 <br />
                 <a href="../index.php" class="btn btn-danger">Cancel</a>

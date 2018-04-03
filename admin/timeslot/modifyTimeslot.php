@@ -1,3 +1,25 @@
+<?php
+include '../../dbconfig.php';
+
+// Initialize the session
+session_start();
+// If session variable is not set it will redirect to login page
+if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
+    header("location: login.php");
+    exit;
+}
+
+$sql = "SELECT Timeslot FROM timeslots";
+$result = mysqli_query($link,$sql);
+
+if (!$result) {
+    printf("Error: %s\n", mysqli_error($link));
+    exit();
+}
+	
+mysqli_close($link);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +48,13 @@
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group">
                         <label>Timeslot ID</label>
-                        <select id="time_slot_ID" name="time_slot_ID" class="form-control"></select>
+                        <select id="time_slot_ID" name="time_slot_ID" class="form-control">
+						<?php
+						while ($row = mysqli_fetch_array($result)) {
+							echo "<option value='" . $row['TimeslotID'] . "'>" . $row['Timeslot'] . "</option>";
+						}
+						?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Timeslot</label>
