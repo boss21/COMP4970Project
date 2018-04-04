@@ -84,8 +84,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				<h2>Volunteer Portal Login</h2>
 				<form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
 					<div class="form-group <?php echo (!empty($userID_err)) ? "has-error" : ""; ?>">
-						<label for="user_ID">UserID:</label>
-						<input type="text" class="form-control" name="userID" id="user_ID">
+						<label>UserID</label>
+						<input type="text" class="form-control" name="userID" id="userID">
 						<span class="help-block" style="color:red;">
 							<?php echo $userID_err; ?>
 						</span>

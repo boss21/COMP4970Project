@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				<div class="col-sm-4 text-center">
 					<form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
 						<div class="form-group <?php echo (!empty($headCount_err)) ? "has-error" : ""; ?>">
-							<label for="HeadCount">Headcount</label>
+							<label>Headcount</label>
 							<input type="number" id="HeadCount" name="HeadCount" min="0" max="<?php echo $capacity*1.1; ?>" pattern="[0-9]" class="form-control" />
 							<span class="help-block" style="color:red;">
 								<?php echo $headCount_err; ?>

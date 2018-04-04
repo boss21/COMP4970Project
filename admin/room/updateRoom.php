@@ -13,10 +13,11 @@ if (empty($_POST["roomID"])) {
 	header("location: ../index.php");
 	exit;
 }
+
 $roomID = $_POST["roomID"];
 $sql = "SELECT Room, Capacity FROM Rooms WHERE RoomID = '$roomID'";
 $result = mysqli_query($link, $sql);
-$row = mysqli_fetch_array($result)
+$row = mysqli_fetch_array($result);
 $room = $row["Room"];
 $capacity = $row["Capacity"];
 

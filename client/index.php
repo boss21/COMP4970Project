@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				<div class="col-sm-4 text-center">
 					<form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
 						<div class="form-group <?php echo (!empty($roomID_err)) ? "has-error" : ""; ?>">
-							<label for="RoomID">Room</label>
+							<label>Room</label>
 							<select id="RoomID" name="RoomID" class="form-control">
 							<?php
 							while ($row = mysqli_fetch_array($resultRoom)) {
@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 							</span>
 						</div>
 						<div class="form-group <?php echo (!empty($timeslotID_err)) ? "has-error" : ""; ?>">
-							<label for="TimeslotID">Timeslot</label>
+							<label>Timeslot</label>
 							<select id="TimeslotID" name="TimeslotID" class="form-control">
 							<?php
 							while ($row = mysqli_fetch_array($resultTimeslot)) {
@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 							</span>
 						</div>
 						<div class="form-group <?php echo (!empty($headCountType_err)) ? "has-error" : ""; ?>">
-							<label for="HeadCountType">Headcount Type</label>
+							<label>Headcount Type</label>
 							<div class="radio-inline">
 								<input type="radio" name="HeadCountType" id="HeadCountType" value="Beginning"> Beginning
 								<input type="radio" name="HeadCountType" id="HeadCountType" value="Middle"> Middle
