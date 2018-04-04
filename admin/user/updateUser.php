@@ -20,8 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_userID"])) {
     $sqlUpdate = "UPDATE Clients SET UserID = '$userID' WHERE UserID = '$oldUserID'";
 
     if (mysqli_query($link, $sqlUpdate)) {
-        echo "<script type='text/javascript'>alert('$oldUserID successfully updated to $userID!');</script>";
-        header("location: modifyUser.php");
+        echo "<script type='text/javascript'>alert('$oldUserID successfully updated to $userID!');window.location.href='modifyUser.php';</script>";
     } else {
         echo "Oops! Something went wrong. Please try again later.";
     }
