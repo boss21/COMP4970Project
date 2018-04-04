@@ -11,6 +11,8 @@ include '../dbconfig.php';
 
 $sql = "DELETE * FROM Forms";
 
+echo "fuck";
+
 if (mysqli_query($link, $sql){
     header("location: index.php");
 } else {
