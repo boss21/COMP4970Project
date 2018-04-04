@@ -21,17 +21,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $timeslot = trim($_POST["time_slot"]);
     }
 
-    $timeslot = $_POST["time_slot"];
-    $sql = "SELECT Timeslot FROM Timeslots WHERE Timeslot = '$timeslot'";
-    $result = mysqli_query($link, $sql);
-	if (mysqli_num_rows($result) != 0) {
-		echo "<script>alert('$timeslot already exists.');window.location.href='addTimeslot.php';</script>";
-	} else {
-        $sqlAdd = "INSERT INTO Timeslots (Timeslot) VALUES ('$timeslot')";
-        if (mysqli_query($link, $sqlAdd)){
-            echo "<script>alert('$timeslot was successfully added!');</script>";
-        }else{
-            echo "Oops! Something went wrong. Please try again later.";
+    if (empty($timeslot_err)){
+        $sql = "SELECT Timeslot FROM Timeslots WHERE Timeslot = '$timeslot'";
+        $result = mysqli_query($link, $sql);
+        if (mysqli_num_rows($result) != 0) {
+            echo "<script>alert('$timeslot already exists.');window.location.href='addTimeslot.php';</script>";
+        } else {
+            $sqlAdd = "INSERT INTO Timeslots (Timeslot) VALUES ('$timeslot')";
+            if (mysqli_query($link, $sqlAdd)){
+                echo "<script>alert('$timeslot was successfully added!');</script>";
+            }else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
         }
     }
 }
