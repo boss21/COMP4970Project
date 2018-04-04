@@ -77,6 +77,7 @@ mysqli_close($link);
 						    <?php echo $userID_err; ?>
 						</span>
                     </div>
+                    <input type="hidden" id="userID" name="userID" value="<?php echo $_POST["userID"]; ?>" />
                     <input type="hidden" id="old_userID" name="old_userID" value="<?php echo $_POST["userID"]; ?>" />
                     <input type="submit" value="Update" class="btn btn-primary"/>
                     <input type="reset" class="btn btn-default"/>
