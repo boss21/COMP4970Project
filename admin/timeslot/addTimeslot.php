@@ -9,19 +9,29 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Include config file
 include "../../dbconfig.php";
 
-$timeslot = "";
-$timeslot_err = "";
+$timeslotStart = "";
+$timeslotEnd = "";
+$timeslotStart_err = "";
+$timeslotEnd_err = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
-    // Check if Timeslot is empty
-    if (empty(trim($_POST["time_slot"]))) {
-        $timeslot_err = "Please enter Timeslot.";
+    // Check if Timeslot Start is empty
+    if (empty(trim($_POST["time_slot_start"]))) {
+        $timeslotStart_err = "Please enter Timeslot Start.";
     } else {
-        $timeslot = trim($_POST["time_slot"]);
+        $timeslotStart = trim($_POST["time_slot_start"]);
     }
 
-    if (empty($timeslot_err)){
+    // Check if Timeslot End is empty
+    if (empty(trim($_POST["time_slot_end"]))) {
+        $timeslotEnd_err = "Please enter Timeslot End.";
+    } else {
+        $timeslotEnd = trim($_POST["time_slot_end"]);
+    }
+
+    if (empty($timeslotStart_err) && empty($timeslotEnd_err)){
+        $timeslot = $timeslotStart . " - " . $timeslotEnd;
         $sql = "SELECT Timeslot FROM Timeslots WHERE Timeslot = '$timeslot'";
         $result = mysqli_query($link, $sql);
         if (mysqli_num_rows($result) != 0) {
@@ -65,11 +75,18 @@ mysqli_close($link);
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
                 <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
-                    <div class="form-group <?php echo (!empty($timeslot_err)) ? "has-error" : ""; ?>">
-                        <label>Timeslot</label>
-                        <input type="time" id="time_slot" name="time_slot" class="form-control" />
+                    <div class="form-group <?php echo (!empty($timeslotStart_err)) ? "has-error" : ""; ?>">
+                        <label>Timeslot Start</label>
+                        <input type="time" id="time_slot_start" name="time_slot_start" class="form-control" />
                         <span class="help-block" style="color:red;">
-						    <?php echo $timeslot_err; ?>
+						    <?php echo $timeslotStart_err; ?>
+						</span>
+                    </div>
+                    <div class="form-group <?php echo (!empty($timeslotEnd_err)) ? "has-error" : ""; ?>">
+                        <label>Timeslot End</label>
+                        <input type="time" id="time_slot_end" name="time_slot_end" class="form-control" />
+                        <span class="help-block" style="color:red;">
+						    <?php echo $timeslotEnd_err; ?>
 						</span>
                     </div>
                     <input type="submit" name="submit" value="Add" class="btn btn-primary" />
