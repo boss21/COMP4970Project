@@ -62,11 +62,11 @@ mysqli_close($link);
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group">
                         <label>Room Name</label>
-                        <input type="text" id="room_name" name="room_name" class="form-control" value="<?php echo $roomName ?>" />
+                        <input type="text" id="room_name" name="room_name" class="form-control" value="<?php echo $room; ?>" />
                     </div>
                     <div class="form-group">
                         <label>Capacity</label>
-                        <input type="number" id="capacity" name="capacity" min="0" class="form-control" value="<?php echo $capacity ?>" />
+                        <input type="number" id="capacity" name="capacity" min="0" class="form-control" value="<?php echo $capacity; ?>" />
                     </div>
 					<input type="hidden" id="old_roomID" name="old_roomID" value="<?php echo $_POST["roomID"]; ?>" />
                     <input type="submit" value="Update" class="btn btn-primary" />
