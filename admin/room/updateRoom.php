@@ -10,8 +10,8 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 include '../../dbconfig.php';
 
 if (empty($_POST["roomID"])) {
-	header("location: ../index.php");
-	exit;
+	//header("location: ../index.php");
+	//exit;
 }
 
 $roomID = $_POST["roomID"];
