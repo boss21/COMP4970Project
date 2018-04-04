@@ -10,7 +10,7 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 include "../../dbconfig.php";
 
 if (empty($_POST["userID"])) {
-	header("location: index.php");
+	header("location: ../index.php");
 	exit;
 }
 
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_userID"])) {
     $sqlUpdate = "UPDATE Clients SET UserID = '$userID' WHERE UserID = '$oldUserID'";
 
     if (mysqli_query($link, $sqlUpdate)) {
-        echo "<script type='text/javascript'>alert('$oldUserID successfully updated to $userID!');window.location.href='modifyUser.php';</script>";
+        echo "<script type='text/javascript'>alert('$oldUserID was successfully updated to $userID!');window.location.href='modifyUser.php';</script>";
     } else {
         echo "Oops! Something went wrong. Please try again later.";
     }
