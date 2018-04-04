@@ -31,8 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     if (empty($timeslotStart_err) && empty($timeslotEnd_err)){
-        $timeslotStart = date("g:i a", strtotime($timeslotStart));
-        $timeslotEnd = date("g:i a", strtotime($timeslotEnd));
+        $timeslotStart = date("g:i A", strtotime($timeslotStart));
+        $timeslotEnd = date("g:i A", strtotime($timeslotEnd));
         $timeslot = $timeslotStart . " - " . $timeslotEnd;
         $sql = "SELECT Timeslot FROM Timeslots WHERE Timeslot = '$timeslot'";
         $result = mysqli_query($link, $sql);
