@@ -11,7 +11,7 @@ include '../../dbconfig.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $room = $_POST["room_name"];
-    $sql = "SELECT Room FROM rooms";
+    $sql = "SELECT Room FROM Rooms";
     $result = mysqli_query($link, $sql);
 	if (mysqli_num_rows($result) != 0) {
 		echo "<script>alert('$room already exists.');window.location.href='addRoom.php';</script>";
