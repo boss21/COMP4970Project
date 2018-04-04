@@ -20,10 +20,10 @@ if (empty($_POST["userID"])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_userID"])) {
 
     // Check if UserID is empty
-    if (empty(trim($_POST["userID"]))) {
+    if (empty(trim($_POST["user_ID"]))) {
         $userID_err = "Please enter UserID.";
     } else {
-        $userID = trim($_POST["userID"]);
+        $userID = trim($_POST["user_ID"]);
     }
 
     if (empty($userID_err)){
@@ -72,7 +72,7 @@ mysqli_close($link);
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group <?php echo (!empty($userID_err)) ? "has-error" : ""; ?>">
                         <label>UserID</label>
-                        <input type="text" id="userID" name="userID" value="<?php echo $_POST['userID']; ?>" class="form-control"/>
+                        <input type="text" id="user_ID" name="user_ID" value="<?php echo $_POST['userID']; ?>" class="form-control"/>
                         <span class="help-block" style="color:red;">
 						    <?php echo $userID_err; ?>
 						</span>
