@@ -9,7 +9,18 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Include config file
 include '../../dbconfig.php';
 
+$timeslot = "";
+$timeslot_err = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    // Check if Timeslot is empty
+    if (empty(trim($_POST["time_slot"]))) {
+        $timeslot_err = "Please enter Timeslot.";
+    } else {
+        $timeslot = trim($_POST["time_slot"]);
+    }
+
     $timeslot = $_POST["time_slot"];
     $sql = "SELECT Timeslot FROM Timeslots WHERE Timeslot = '$timeslot'";
     $result = mysqli_query($link, $sql);
@@ -53,9 +64,12 @@ mysqli_close($link);
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <div class="form-group">
+                    <div class="form-group <?php echo (!empty($timeslot_err)) ? "has-error" : ""; ?>">
                         <label>Timeslot</label>
                         <input type="text" id="time_slot" name="time_slot" class="form-control" />
+                        <span class="help-block" style="color:red;">
+						    <?php echo $timeslot_err; ?>
+						</span>
                     </div>
                     <input type="submit" name="submit" value="Add" class="btn btn-primary" />
                     <input type="reset" class="btn btn-default" />
