@@ -9,25 +9,23 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Include config file
 include '../../dbconfig.php';
 
-if (empty($_POST["roomID"])) {
+if (empty($_POST["timeslotID"])) {
 	header("location: ../index.php");
 	exit;
 }
 
-$roomID = $_POST["roomID"];
-$sql = "SELECT Room, Capacity FROM Rooms WHERE RoomID = '$roomID'";
+$timeslotID = $_POST["timeslotID"];
+$sql = "SELECT Timeslot FROM Timeslots WHERE TimeslotID = '$timeslotID'";
 $result = mysqli_query($link, $sql);
 $row = mysqli_fetch_array($result);
-$room = $row["Room"];
-$capacity = $row["Capacity"];
+$timeslot = $row["Timeslot"];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_roomID"])) {
-    $roomID = $_POST["old_roomID"];
-    $room = $_POST["room_name"];
-    $capacity = $_POST["capacity"];
-    $sqlUpdate = "UPDATE Rooms SET Room = '$room', Capacity = '$capacity' WHERE RoomID = '$roomID'";
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_timeslotID"])) {
+    $timeslotID = $_POST["old_timeslotID"];
+    $timeslot = $_POST["time_slot"];
+    $sqlUpdate = "UPDATE Timeslots SET Timeslot = '$timeslot' WHERE TimeslotID = '$timeslotID'";
     if (mysqli_query($link, $sqlUpdate)) {
-        echo "<script>alert('$room was successfully updated!');window.location.href='modifyRoom.php';</script>";
+        echo "<script>alert('$timeslot was successfully updated!');window.location.href='modifyTimeslot.php';</script>";
     } else {
         echo "Oops! Something went wrong. Please try again later.";
     }
@@ -61,15 +59,11 @@ mysqli_close($link);
             <div class="col-sm-4 text-center">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group">
-                        <label>Room Name</label>
-                        <input type="text" id="room_name" name="room_name" class="form-control" value="<?php echo $room; ?>" />
+                        <label>Timeslot</label>
+                        <input type="text" id="time_slot" name="time_slot" class="form-control" value="<?php echo $timeslot; ?>" />
                     </div>
-                    <div class="form-group">
-                        <label>Capacity</label>
-                        <input type="number" id="capacity" name="capacity" min="0" class="form-control" value="<?php echo $capacity; ?>" />
-                    </div>
-                    <input type="hidden" id="roomID" name="roomID" value="<?php echo $_POST["roomID"]; ?>" />
-					<input type="hidden" id="old_roomID" name="old_roomID" value="<?php echo $_POST["roomID"]; ?>" />
+                    <input type="hidden" id="timeslotID" name="timeslotID" value="<?php echo $_POST["timeslotID"]; ?>" />
+					<input type="hidden" id="old_timeslotID" name="old_timeslotID" value="<?php echo $_POST["timeslotID"]; ?>" />
                     <input type="submit" value="Update" class="btn btn-primary" />
                     <input type="reset" class="btn btn-default" />
                     <a href="../index.php" class="btn btn-danger">Cancel</a>

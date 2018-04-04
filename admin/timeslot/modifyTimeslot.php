@@ -9,7 +9,7 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Include config file
 include '../../dbconfig.php';
 
-$sql = "SELECT RoomID, Room FROM Rooms";
+$sql = "SELECT TimeslotID, Timeslot FROM Timeslots";
 $result = mysqli_query($link, $sql);
 	
 mysqli_close($link);
@@ -38,13 +38,13 @@ mysqli_close($link);
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
-                <form action="updateRoom.php" method="post">
+                <form action="updateTimeslot.php" method="post">
                     <div class="form-group">
                         <label>Timeslot</label>
-                        <select id="roomID" name="roomID" class="form-control">
+                        <select id="timeslotID" name="timeslotID" class="form-control">
                             <?php
                             while ($row = mysqli_fetch_array($result)) {
-                                echo "<option value='" . $row['RoomID'] . "'>" . $row['Room'] . "</option>";
+                                echo "<option value='" . $row['TimeslotID'] . "'>" . $row['Timeslot'] . "</option>";
                             }
                             ?>
 						</select>
