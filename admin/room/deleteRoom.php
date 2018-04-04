@@ -14,7 +14,7 @@ $result = mysqli_query($link, $sql);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
    $roomID = $_POST["room_ID"];
-   $sqlDelete = "DELETE FROM rooms WHERE Room = '$roomID'";
+   $sqlDelete = "DELETE FROM Rooms WHERE Room = '$roomID'";
    if (mysqli_query($link, $sqlDelete)){
        echo "<script>alert('$roomID successfully deleted!');</script>";
    }else{
