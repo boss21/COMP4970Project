@@ -9,7 +9,7 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 
 include '../../dbconfig.php';
 
-$sql = "SELECT * FROM rooms";
+$sql = "SELECT * FROM Rooms";
 $result = mysqli_query($link, $sql);
 
 mysqli_close($link);
