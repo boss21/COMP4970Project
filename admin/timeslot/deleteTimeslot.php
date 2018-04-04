@@ -14,7 +14,7 @@ $result = mysqli_query($link, $sql);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
    $timeslotID = $_POST["timeslotID"];
-   $sqlDelete = "DELETE FROM Timeslots WHERE Timeslot = '$timeslotID'";
+   $sqlDelete = "DELETE FROM Timeslots WHERE TimeslotID = '$timeslotID'";
    if (mysqli_query($link, $sqlDelete)){
        echo "<script>alert('$timeslotID successfully deleted!');window.location.href='deleteTimeslot.php';</script>";
    }else{
