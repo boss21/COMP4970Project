@@ -9,7 +9,7 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 
 include '../../dbconfig.php';
 
-$sql = "SELECT * FROM Rooms";
+$sql = "SELECT * FROM Timeslots";
 $result = mysqli_query($link, $sql);
 
 mysqli_close($link);
@@ -42,14 +42,13 @@ mysqli_close($link);
 				<table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>RoomID</th>
-                            <th>Room Name</th>
-                            <th>Capacity</th>
+                            <th>TimeslotID</th>
+                            <th>Timeslot</th>
                         </tr>
                     </thead>
 					<?php
 					while ($row = mysqli_fetch_array($result)) {    							
-                        echo "<tr><td>".$row['RoomID']."</td><td>".$row['Room']."</td><td>".$row['Capacity']."</td></tr>";	
+                        echo "<tr><td>".$row['TimeslotID']."</td><td>".$row['Timeslot']."</td></tr>";	
 					}
 					?>
 				</table>
