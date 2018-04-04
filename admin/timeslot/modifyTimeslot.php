@@ -7,7 +7,7 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
     exit;
 }
 // Include config file
-include '../../dbconfig.php';
+include "../../dbconfig.php";
 
 $sql = "SELECT TimeslotID, Timeslot FROM Timeslots";
 $result = mysqli_query($link, $sql);

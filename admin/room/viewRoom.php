@@ -7,7 +7,7 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
     exit;
 }
 
-include '../../dbconfig.php';
+include "../../dbconfig.php";
 
 $sql = "SELECT * FROM Rooms";
 $result = mysqli_query($link, $sql);

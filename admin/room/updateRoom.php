@@ -7,7 +7,7 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
     exit;
 }
 // Include config file
-include '../../dbconfig.php';
+include "../../dbconfig.php";
 
 $room = "";
 $capacity = "";
@@ -86,7 +86,7 @@ mysqli_close($link);
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
                     <div class="form-group <?php echo (!empty($room_err)) ? "has-error" : ""; ?>">
                         <label>Room Name</label>
                         <input type="text" id="room_name" name="room_name" class="form-control" value="<?php echo $room; ?>" />

@@ -7,7 +7,7 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
     exit;
 }
 // Include config file
-include '../../dbconfig.php';
+include "../../dbconfig.php";
 
 $roomID = "";
 $roomID_err = "";
@@ -66,7 +66,7 @@ mysqli_close($link);
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
                     <div class="form-group <?php echo (!empty($roomID_err)) ? "has-error" : ""; ?>">
                         <label>Room</label>
                         <select id="roomID" name="roomID" class="form-control">
