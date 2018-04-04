@@ -43,9 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_roomID"])) {
     }
 
     if (empty($room_err) && empty($capacity_err)){
+        $oldRoom = $_POST["old_room"];
         $sql = "SELECT Room FROM Rooms WHERE Room = '$room'";
         $result = mysqli_query($link, $sql);
-        if (mysqli_num_rows($result) != 0) {
+        if (mysqli_num_rows($result) != 0 && $oldRoom != $room) {
             echo "<script>alert('$room already exists.');window.location.href='modifyRoom.php';</script>";
         } else {
             $roomID = $_POST["old_roomID"];
@@ -101,7 +102,8 @@ mysqli_close($link);
 						</span>
                     </div>
                     <input type="hidden" id="roomID" name="roomID" value="<?php echo $_POST["roomID"]; ?>" />
-					<input type="hidden" id="old_roomID" name="old_roomID" value="<?php echo $_POST["roomID"]; ?>" />
+                    <input type="hidden" id="old_roomID" name="old_roomID" value="<?php echo $_POST["roomID"]; ?>" />
+                    <input type="hidden" id="old_room" name="old_room" value="<?php echo $room; ?>" />
                     <input type="submit" value="Update" class="btn btn-primary" />
                     <input type="reset" class="btn btn-default" />
                     <a href="../index.php" class="btn btn-danger">Cancel</a>
