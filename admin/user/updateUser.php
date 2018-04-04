@@ -14,7 +14,7 @@ if (empty($_POST["userID"])) {
 	exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["userID"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_userID"])) {
     $oldUserID = $_POST["old_userID"];
     $userID = $_POST["userID"];
     $sqlUpdate = "UPDATE Clients SET UserID = '$userID' WHERE UserID = '$oldUserID'";
