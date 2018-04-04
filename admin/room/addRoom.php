@@ -3,7 +3,7 @@
 session_start();
 // If session variable is not set it will redirect to login page
 if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
-    header("location: login.php");
+    header("location: ../login.php");
     exit;
 }
 // Include config file
@@ -13,9 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $room = $_POST["room_name"];
     $sql = "SELECT Room FROM rooms";
     $result = mysqli_query($link, $sql);
-	if (mysqli_num_rows($result) != 0){
+	if (mysqli_num_rows($result) != 0) {
 		echo "<script>alert('$room already exists.');window.location.href='addRoom.php';</script>";
-		return false;
 	} else {
         $capacity = $_POST["capacity"];
         $sqlAdd = "INSERT INTO Rooms (Room, Capacity) VALUES ('$room', '$capacity')";

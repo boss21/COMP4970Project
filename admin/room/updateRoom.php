@@ -3,30 +3,30 @@
 session_start();
 // If session variable is not set it will redirect to login page
 if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
-    header("location: login.php");
+    header("location: ../login.php");
     exit;
 }
+// Include config file
 include '../../dbconfig.php';
 
-if (isset($_POST['room_ID'])){
-	$roomID = $_POST['room_ID'];
-	$sql = "SELECT Room, Capacity FROM rooms WHERE RoomID = '$roomID'";
-	$result = mysqli_query($link, $sql);
-	$row = mysqli_fetch_array($result);
-	$roomName = $row['Room'];
-	$capacity = $row['Capacity'];
-}
-else if ($_POST['room_name'] && $_POST['capacity']){
-	$roomID = $_POST['roomID'];
-	$roomName=$_POST['room_name'];
-	$capacity= $_POST['capacity'];
-	$sql = "UPDATE rooms SET Room = '$roomName', Capacity = '$capacity' WHERE RoomID='$roomID'";
-	mysqli_query($link, $sql);
-}
-else{
-	header("location: modifyRoom.php");
+if (empty($_POST["roomID"])) {
+	header("location: ../index.php");
+	exit;
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_roomID"])) {
+    $roomID = $_POST["old_roomID"];
+    $room = $_POST["room_name"];
+    $capacity = $_POST["capacity"];
+    $sqlUpdate = "UPDATE Rooms SET Room = '$room', Capacity = '$capacity' WHERE RoomID = '$roomID'";
+    if (mysqli_query($link, $sqlUpdate)) {
+        echo "<script>alert('$room was successfully updated!');window.location.href='modifyRoom.php';</script>";
+    } else {
+        echo "Oops! Something went wrong. Please try again later.";
+    }
+}
+
+mysqli_close($link);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +52,6 @@ else{
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
-                <br />
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group">
                         <label>Room Name</label>
@@ -62,14 +61,11 @@ else{
                         <label>Capacity</label>
                         <input type="number" id="capacity" name="capacity" min="0" class="form-control" value="<?php echo $capacity ?>" />
                     </div>
-					<input type="hidden" id="room_ID" name="roomID" value="<?php echo $roomID ?>" />
-                    <input type="submit" value="Modify" class="btn btn-primary" />
-                    <br />
-                    <br />
+					<input type="hidden" id="old_roomID" name="old_roomID" value="<?php echo $_POST["roomID"]; ?>" />
+                    <input type="submit" value="Update" class="btn btn-primary" />
                     <input type="reset" class="btn btn-default" />
+                    <a href="../index.php" class="btn btn-danger">Cancel</a>
                 </form>
-                <br />
-                <a href="../index.php" class="btn btn-danger">Cancel</a>
             </div>
             <div class="col-sm-4"></div>
         </div>

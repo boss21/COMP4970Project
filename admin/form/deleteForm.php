@@ -53,8 +53,8 @@ mysqli_close($link);
                 <br />
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group">
-                        <label for="form_ID">Form ID</label>
-                        <select id="form_ID" name="form_ID" class="form-control"><?php
+                        <label>Form ID</label>
+                        <select id="formID" name="formID" class="form-control"><?php
                             while ($row = mysqli_fetch_array($sqlQueryResult)) {
                                 echo "<option value='" . $row['FormID'] . "'>" . $row['FormID'] . "</option>";
                             }

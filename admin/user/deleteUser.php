@@ -3,7 +3,7 @@
 session_start();
 // If session variable is not set it will redirect to login page
 if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
-    header("location: login.php");
+    header("location: ../login.php");
     exit;
 }
 // Include config file
@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sqlDelete = "DELETE FROM Clients WHERE UserID = '$userID'";
 
     if (mysqli_query($link, $sqlDelete)) {
-        echo "<script type='text/javascript'>alert('$userID successfully deleted!');window.location.href='deleteUser.php';</script>";
+        echo "<script>alert('$userID successfully deleted!');</script>";
     } else {
         echo "Oops! Something went wrong. Please try again later.";
     }
@@ -51,7 +51,7 @@ mysqli_close($link);
             <div class="col-sm-4 text-center">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group">
-                        <label for="userID">UserID</label>
+                        <label>UserID</label>
                         <select id="userID" name="userID" class="form-control">
                             <?php
                             while ($row = mysqli_fetch_array($result)) {

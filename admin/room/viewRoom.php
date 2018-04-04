@@ -3,18 +3,15 @@
 session_start();
 // If session variable is not set it will redirect to login page
 if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
-    header("location: login.php");
+    header("location: ../login.php");
     exit;
 }
 
 include '../../dbconfig.php';
 
 $sql = "SELECT * FROM rooms";
-$result = mysqli_query($link,$sql);
-if (!$result) {
-    printf("Error: %s\n", mysqli_error($link));
-    exit();
-}
+$result = mysqli_query($link, $sql);
+
 mysqli_close($link);
 ?>
 
@@ -42,24 +39,20 @@ mysqli_close($link);
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
-                <br />
-                <div>
-					<table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Room ID</th>
-                                <th>Room Name</th>
-                                <th>Capacity</th>
-                            </tr>
-                        </thead>
-						<?php
-							while ($row = mysqli_fetch_array($result)) {
-								echo "<tr><td>".$row['RoomID']."</td><td>".$row['Room']."</td><td>".$row['Capacity']."</td></tr>";	
-							}
-						?>
-					</table>
-                </div>
-                <br />
+				<table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Room ID</th>
+                            <th>Room Name</th>
+                            <th>Capacity</th>
+                        </tr>
+                    </thead>
+					<?php
+					while ($row = mysqli_fetch_array($result)) {    							
+                        echo "<tr><td>".$row['RoomID']."</td><td>".$row['Room']."</td><td>".$row['Capacity']."</td></tr>";	
+					}
+					?>
+				</table>
                 <a href="../index.php" class="btn btn-danger">Cancel</a>
             </div>
             <div class="col-sm-4"></div>

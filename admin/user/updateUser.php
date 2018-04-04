@@ -3,7 +3,7 @@
 session_start();
 // If session variable is not set it will redirect to login page
 if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
-    header("location: login.php");
+    header("location: ../login.php");
     exit;
 }
 // Include config file
@@ -18,9 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_userID"])) {
     $oldUserID = $_POST["old_userID"];
     $userID = $_POST["userID"];
     $sqlUpdate = "UPDATE Clients SET UserID = '$userID' WHERE UserID = '$oldUserID'";
-
     if (mysqli_query($link, $sqlUpdate)) {
-        echo "<script type='text/javascript'>alert('$oldUserID was successfully updated to $userID!');window.location.href='modifyUser.php';</script>";
+        echo "<script>alert('$oldUserID was successfully updated to $userID!');window.location.href='modifyUser.php';</script>";
     } else {
         echo "Oops! Something went wrong. Please try again later.";
     }
@@ -56,8 +55,8 @@ mysqli_close($link);
                     <div class="form-group">
                         <label>UserID</label>
                         <input type="text" id="userID" name="userID" value="<?php echo $_POST['userID']; ?>" class="form-control"/>
-                        <input type="hidden" id="old_userID" name="old_userID" value="<?php echo $_POST['userID']; ?>" />
                     </div>
+                    <input type="hidden" id="old_userID" name="old_userID" value="<?php echo $_POST["userID"]; ?>" />
                     <input type="submit" value="Update" class="btn btn-primary"/>
                     <input type="reset" class="btn btn-default"/>
                     <a href="../index.php" class="btn btn-danger">Cancel</a>

@@ -3,7 +3,7 @@
 session_start();
 // If session variable is not set it will redirect to login page
 if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
-    header("location: login.php");
+    header("location: ../login.php");
     exit;
 }
 // Include config file
@@ -53,7 +53,7 @@ mysqli_close($link);
             <div class="col-sm-4 text-center">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group">
-                        <label for="userID">UserID</label>
+                        <label>UserID</label>
                         <input type="text" id="userID" name="userID" class="form-control"/>
                     </div>
                     <input type="submit" value="Add" class="btn btn-primary"/>

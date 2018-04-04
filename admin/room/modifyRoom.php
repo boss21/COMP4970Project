@@ -3,19 +3,14 @@
 session_start();
 // If session variable is not set it will redirect to login page
 if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
-    header("location: login.php");
+    header("location: ../login.php");
     exit;
 }
-
+// Include config file
 include '../../dbconfig.php';
 
 $sql = "SELECT RoomID, Room FROM rooms";
-$result = mysqli_query($link,$sql);
-
-if (!$result) {
-    printf("Error: %s\n", mysqli_error($link));
-    exit();
-}
+$result = mysqli_query($link, $sql);
 	
 mysqli_close($link);
 ?>
@@ -43,25 +38,21 @@ mysqli_close($link);
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
-                <br />
                 <form action="updateRoom.php" method="post">
                     <div class="form-group">
                         <label>Room ID</label>
-                        <select id="room_ID" name="room_ID" class="form-control">
-						<?php
-						while ($row = mysqli_fetch_array($result)) {
-							echo "<option value='" . $row['RoomID'] . "'>" . $row['Room'] . "</option>";
-						}
-						?>
+                        <select id="roomID" name="roomID" class="form-control">
+                            <?php
+                            while ($row = mysqli_fetch_array($result)) {
+                                echo "<option value='" . $row['RoomID'] . "'>" . $row['Room'] . "</option>";
+                            }
+                            ?>
 						</select>
                     </div>
                     <input type="submit" value="Modify" class="btn btn-primary" />
-                    <br />
-                    <br />
                     <input type="reset" class="btn btn-default" />
+                    <a href="../index.php" class="btn btn-danger">Cancel</a>
                 </form>
-                <br />
-                <a href="../index.php" class="btn btn-danger">Cancel</a>
             </div>
             <div class="col-sm-4"></div>
         </div>

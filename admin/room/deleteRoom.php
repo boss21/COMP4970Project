@@ -1,13 +1,12 @@
 <?php
-
 // Initialize the session
 session_start();
 // If session variable is not set it will redirect to login page
 if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
-    header("location: login.php");
+    header("location: ../login.php");
     exit;
 }
-
+// Include config file
 include '../../dbconfig.php';
 
 $sql = "SELECT Room FROM rooms";
@@ -15,13 +14,11 @@ $result = mysqli_query($link, $sql);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
    $roomID = $_POST["room_ID"];
-   $sql = "DELETE FROM rooms WHERE Room = '$roomID'";
-   
-   if (mysqli_query($link, $sql)){
-       echo "<script type='text/javascript'>alert('$roomID successfully deleted.');</script>";
-	   header("location: deleteRoom.php");
+   $sqlDelete = "DELETE FROM rooms WHERE Room = '$roomID'";
+   if (mysqli_query($link, $sqlDelete)){
+       echo "<script>alert('$roomID successfully deleted!');</script>";
    }else{
-       echo "<script type='text/javascript'>alert('Oops. Try Again Later.');</script>";
+       echo "Oops! Something went wrong. Please try again later.";
    }
 }
 mysqli_close($link);
@@ -51,25 +48,21 @@ mysqli_close($link);
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
-                <br />
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group">
                         <label>Room ID</label>
                         <select id="room_ID" name="room_ID" class="form-control">
-						<?php
-						while ($row = mysqli_fetch_array($result)) {
-							echo "<option value='" . $row['Room'] . "'>" . $row['Room'] . "</option>";
-						}
-						?>
+                            <?php
+                            while ($row = mysqli_fetch_array($result)) {
+                                echo "<option value='" . $row['Room'] . "'>" . $row['Room'] . "</option>";
+                            }
+                            ?>
 						</select>
                     </div>
                     <input type="submit" value="Delete" class="btn btn-primary" />
-                    <br />
-                    <br />
                     <input type="reset" class="btn btn-default" />
+                    <a href="../index.php" class="btn btn-danger">Cancel</a>
                 </form>
-                <br />
-                <a href="../index.php" class="btn btn-danger">Cancel</a>
             </div>
             <div class="col-sm-4"></div>
         </div>
