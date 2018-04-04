@@ -9,6 +9,9 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Include config file
 include '../../dbconfig.php';
 
+$timeslot = "";
+$timeslot_err = "";
+
 if (empty($_POST["timeslotID"])) {
 	header("location: ../index.php");
 	exit;
@@ -21,19 +24,29 @@ $row = mysqli_fetch_array($result);
 $timeslot = $row["Timeslot"];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_timeslotID"])) {
-    $timeslot = $_POST["time_slot"];
-    $sql = "SELECT Timeslot FROM Timeslots WHERE Timeslot = '$timeslot'";
-    $result = mysqli_query($link, $sql);
-	if (mysqli_num_rows($result) != 0) {
-		echo "<script>alert('$timeslot already exists.');window.location.href='modifyTimeslot.php';</script>";
-	} else {
-        $timeslotID = $_POST["old_timeslotID"];
-        $timeslot = $_POST["time_slot"];
-        $sqlUpdate = "UPDATE Timeslots SET Timeslot = '$timeslot' WHERE TimeslotID = '$timeslotID'";
-        if (mysqli_query($link, $sqlUpdate)) {
-            echo "<script>alert('$timeslot was successfully updated!');window.location.href='modifyTimeslot.php';</script>";
+
+    // Check if Timeslot is empty
+    if (empty(trim($_POST["time_slot"]))) {
+        $timeslot_err = "Please enter Timeslot.";
+    } else {
+        $timeslot = trim($_POST["time_slot"]);
+    }
+
+    if (empty($timeslot_err)){
+        $oldTimeslot = $_POST["old_timeslot"];
+        $sql = "SELECT Timeslot FROM Timeslots WHERE Timeslot = '$timeslot'";
+        $result = mysqli_query($link, $sql);
+        if (mysqli_num_rows($result) != 0 && $oldTimeslot != $timeslot) {
+            echo "<script>alert('$timeslot already exists.');window.location.href='modifyTimeslot.php';</script>";
         } else {
-            echo "Oops! Something went wrong. Please try again later.";
+            $timeslotID = $_POST["old_timeslotID"];
+            $timeslot = $_POST["time_slot"];
+            $sqlUpdate = "UPDATE Timeslots SET Timeslot = '$timeslot' WHERE TimeslotID = '$timeslotID'";
+            if (mysqli_query($link, $sqlUpdate)) {
+                echo "<script>alert('$timeslot was successfully updated!');window.location.href='modifyTimeslot.php';</script>";
+            } else {
+                echo "Oops! Something went wrong. Please try again later.";
+            }
         }
     }
 }
@@ -65,9 +78,12 @@ mysqli_close($link);
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <div class="form-group">
+                    <div class="form-group <?php echo (!empty($timeslot_err)) ? "has-error" : ""; ?>">
                         <label>Timeslot</label>
                         <input type="text" id="time_slot" name="time_slot" class="form-control" value="<?php echo $timeslot; ?>" />
+                        <span class="help-block" style="color:red;">
+						    <?php echo $timeslot_err; ?>
+						</span>
                     </div>
                     <input type="hidden" id="timeslotID" name="timeslotID" value="<?php echo $_POST["timeslotID"]; ?>" />
 					<input type="hidden" id="old_timeslotID" name="old_timeslotID" value="<?php echo $_POST["timeslotID"]; ?>" />
