@@ -9,7 +9,7 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Include config file
 include '../../dbconfig.php';
 
-$sql = "SELECT Room FROM rooms";
+$sql = "SELECT Room FROM Rooms";
 $result = mysqli_query($link, $sql);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
