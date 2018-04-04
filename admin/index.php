@@ -69,17 +69,6 @@ include "../dbconfig.php";
                             <a class="dropdown-item" href="timeslot/deleteTimeslot.php">Delete Timeslots</a>
                         </div>
                     </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Forms
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="form/addForm.php">Add Forms</a>
-                            <a class="dropdown-item" href="form/modifyForm.php">Modify Forms</a>
-                            <a class="dropdown-item" href="form/deleteForm.php">Delete Forms</a>
-                            <a class="dropdown-item" href="index.php">View Forms</a>
-                        </div>
-                    </div>
                     <br/>
                     <br/>
                     <div>
