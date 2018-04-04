@@ -40,6 +40,7 @@ mysqli_close($link);
             <div class="col-sm-4 text-center">
                 <a href="clearUsers.php" class="btn btn-primary" onclick="return confirm('Are you sure you want to clear all users?');">Clear Users</a>
                 <br/>
+                <br/>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
