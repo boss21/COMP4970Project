@@ -9,11 +9,11 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Include config file
 include '../../dbconfig.php';
 
-$sql = "SELECT Room FROM Rooms";
+$sql = "SELECT RoomID, Room FROM Rooms";
 $result = mysqli_query($link, $sql);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-   $roomID = $_POST["room_ID"];
+   $roomID = $_POST["roomID"];
    $sqlDelete = "DELETE FROM Rooms WHERE Room = '$roomID'";
    if (mysqli_query($link, $sqlDelete)){
        echo "<script>alert('$roomID successfully deleted!');window.location.href='deleteRoom.php';</script>";
@@ -50,11 +50,11 @@ mysqli_close($link);
             <div class="col-sm-4 text-center">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group">
-                        <label>Room ID</label>
-                        <select id="room_ID" name="room_ID" class="form-control">
+                        <label>Room</label>
+                        <select id="roomID" name="roomID" class="form-control">
                             <?php
                             while ($row = mysqli_fetch_array($result)) {
-                                echo "<option value='" . $row['Room'] . "'>" . $row['Room'] . "</option>";
+                                echo "<option value='" . $row['RoomID'] . "'>" . $row['Room'] . "</option>";
                             }
                             ?>
 						</select>

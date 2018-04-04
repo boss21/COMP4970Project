@@ -40,7 +40,7 @@ mysqli_close($link);
             <div class="col-sm-4 text-center">
                 <form action="updateRoom.php" method="post">
                     <div class="form-group">
-                        <label>Room ID</label>
+                        <label>Room</label>
                         <select id="roomID" name="roomID" class="form-control">
                             <?php
                             while ($row = mysqli_fetch_array($result)) {

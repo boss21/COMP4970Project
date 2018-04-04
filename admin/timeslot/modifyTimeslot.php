@@ -1,25 +1,19 @@
 <?php
-include '../../dbconfig.php';
-
 // Initialize the session
 session_start();
 // If session variable is not set it will redirect to login page
 if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
-    header("location: login.php");
+    header("location: ../login.php");
     exit;
 }
+// Include config file
+include '../../dbconfig.php';
 
-$sql = "SELECT Timeslot FROM timeslots";
-$result = mysqli_query($link,$sql);
-
-if (!$result) {
-    printf("Error: %s\n", mysqli_error($link));
-    exit();
-}
+$sql = "SELECT RoomID, Room FROM Rooms";
+$result = mysqli_query($link, $sql);
 	
 mysqli_close($link);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,29 +38,21 @@ mysqli_close($link);
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
-                <br />
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <div class="form-group">
-                        <label>Timeslot ID</label>
-                        <select id="time_slot_ID" name="time_slot_ID" class="form-control">
-						<?php
-						while ($row = mysqli_fetch_array($result)) {
-							echo "<option value='" . $row['TimeslotID'] . "'>" . $row['Timeslot'] . "</option>";
-						}
-						?>
-                        </select>
-                    </div>
+                <form action="updateRoom.php" method="post">
                     <div class="form-group">
                         <label>Timeslot</label>
-                        <input type="text" id="time_slot" name="time_slot" class="form-control" />
+                        <select id="roomID" name="roomID" class="form-control">
+                            <?php
+                            while ($row = mysqli_fetch_array($result)) {
+                                echo "<option value='" . $row['RoomID'] . "'>" . $row['Room'] . "</option>";
+                            }
+                            ?>
+						</select>
                     </div>
                     <input type="submit" value="Modify" class="btn btn-primary" />
-                    <br />
-                    <br />
                     <input type="reset" class="btn btn-default" />
+                    <a href="../index.php" class="btn btn-danger">Cancel</a>
                 </form>
-                <br />
-                <a href="../index.php" class="btn btn-danger">Cancel</a>
             </div>
             <div class="col-sm-4"></div>
         </div>

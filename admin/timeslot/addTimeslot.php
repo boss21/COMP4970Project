@@ -1,39 +1,30 @@
 <?php
-
 // Initialize the session
 session_start();
 // If session variable is not set it will redirect to login page
 if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
-    header("location: login.php");
+    header("location: ../login.php");
     exit;
 }
-
+// Include config file
 include '../../dbconfig.php';
 
-$sql1 = "SELECT Timeslot FROM timeslots";
-$result = mysqli_query($link,$sql1);
-$currentTimes = array();
-
-while ($row = mysqli_fetch_array($result)) {
-	$currentTimes[]=$row['Timeslot'];
-}
-
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-   $Timeslot = $_POST["time_slot"];
-   for ($i=0;$i<count($currentTimes);$i++){
-		if ($currentTimes[$i] === $Timeslot){
-			echo "<script type='text/javascript'>alert('$Timeslot is a time already in the database.');window.location.href='addTimeslot.php';</script>";
-			return false;
-		}
-	}
-   $sql2 = "INSERT INTO timeslots (Timeslot) VALUES ('$Timeslot')";
-   if (mysqli_query($link, $sql2)){
-       echo "<script type='text/javascript'>alert('$Timeslot successfully added.');</script>";
-   }else{
-	   
-       echo "<script type='text/javascript'>alert('Oops. Try Again Later.');</script>";
-   }
+    $timeslot = $_POST["time_slot"];
+    $sql = "SELECT Timeslot FROM Timeslots WHERE Timeslot = '$timeslot'";
+    $result = mysqli_query($link, $sql);
+	if (mysqli_num_rows($result) != 0) {
+		echo "<script>alert('$timeslot already exists.');window.location.href='addTimeslot.php';</script>";
+	} else {
+        $sqlAdd = "INSERT INTO Timeslots (Timeslot) VALUES ('$timeslot')";
+        if (mysqli_query($link, $sqlAdd)){
+            echo "<script>alert('$timeslot successfully added!');</script>";
+        }else{
+            echo "Oops! Something went wrong. Please try again later.";
+        }
+    }
 }
+
 mysqli_close($link);
 ?>
 
@@ -61,19 +52,15 @@ mysqli_close($link);
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
-                <br />
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group">
                         <label>Timeslot</label>
                         <input type="text" id="time_slot" name="time_slot" class="form-control" />
                     </div>
-                    <input type="submit" value="Add" class="btn btn-primary" />
-                    <br />
-                    <br />
+                    <input type="submit" name="submit" value="Add" class="btn btn-primary" />
                     <input type="reset" class="btn btn-default" />
+                    <a href="../index.php" class="btn btn-danger">Cancel</a>
                 </form>
-                <br />
-                <a href="../index.php" class="btn btn-danger">Cancel</a>
             </div>
             <div class="col-sm-4"></div>
         </div>
