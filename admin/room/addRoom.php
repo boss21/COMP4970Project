@@ -76,14 +76,14 @@ mysqli_close($link);
                 <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
                     <div class="form-group <?php echo (!empty($room_err)) ? "has-error" : ""; ?>">
                         <label>Room Name</label>
-                        <input type="text" id="room_name" name="room_name" class="form-control" />
+                        <input type="text" id="room_name" name="room_name" max="20" class="form-control" />
                         <span class="help-block" style="color:red;">
 						    <?php echo $room_err; ?>
 						</span>
                     </div>
                     <div class="form-group <?php echo (!empty($capacity_err)) ? "has-error" : ""; ?>">
                         <label>Capacity</label>
-                        <input type="number" id="capacity" name="capacity" min="0" pattern="[0-9]" class="form-control" />
+                        <input type="number" id="capacity" name="capacity" min="0" max="999" pattern="[0-9]" class="form-control" />
                         <span class="help-block" style="color:red;">
 						    <?php echo $capacity_err; ?>
 						</span>

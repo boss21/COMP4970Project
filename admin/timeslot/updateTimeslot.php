@@ -79,7 +79,7 @@ mysqli_close($link);
                 <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
                     <div class="form-group <?php echo (!empty($timeslot_err)) ? "has-error" : ""; ?>">
                         <label>Timeslot</label>
-                        <input type="text" id="time_slot" name="time_slot" class="form-control" value="<?php echo $timeslot; ?>" />
+                        <input type="text" id="time_slot" name="time_slot" max="20" class="form-control" value="<?php echo $timeslot; ?>" />
                         <span class="help-block" style="color:red;">
 						    <?php echo $timeslot_err; ?>
 						</span>

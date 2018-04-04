@@ -72,7 +72,7 @@ mysqli_close($link);
                 <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
                     <div class="form-group <?php echo (!empty($userID_err)) ? "has-error" : ""; ?>">
                         <label>UserID</label>
-                        <input type="text" id="user_ID" name="user_ID" value="<?php echo $_POST['userID']; ?>" class="form-control"/>
+                        <input type="text" id="user_ID" name="user_ID" max="20" value="<?php echo $_POST['userID']; ?>" class="form-control"/>
                         <span class="help-block" style="color:red;">
 						    <?php echo $userID_err; ?>
 						</span>
