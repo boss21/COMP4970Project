@@ -14,14 +14,14 @@ if (empty($_POST["userID"])) {
 	exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["userID"])) {
     $oldUserID = $_POST["old_userID"];
     $userID = $_POST["userID"];
     $sqlUpdate = "UPDATE Clients SET UserID = '$userID' WHERE UserID = '$oldUserID'";
 
     if (mysqli_query($link, $sqlUpdate)) {
         echo "<script type='text/javascript'>alert('$oldUserID successfully updated to $userID!');</script>";
-        //header("location: modifyUser.php");
+        header("location: modifyUser.php");
     } else {
         echo "Oops! Something went wrong. Please try again later.";
     }
