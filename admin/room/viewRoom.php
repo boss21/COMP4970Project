@@ -40,7 +40,9 @@ mysqli_close($link);
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
                 <a href="clearRooms.php" class="btn btn-primary" onclick="return confirm('Are you sure you want to clear all rooms?');">Clear Rooms</a>
-				<table class="table table-bordered">
+                <br/>
+                <br/>
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>RoomID</th>
