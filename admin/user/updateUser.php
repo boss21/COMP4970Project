@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (mysqli_query($link, $sqlUpdate)) {
         echo "<script type='text/javascript'>alert('$oldUserID successfully updated to $userID!');</script>";
-        header("location: modifyUser.php");
+        //header("location: modifyUser.php");
     } else {
         echo "Oops! Something went wrong. Please try again later.";
     }
