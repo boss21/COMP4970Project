@@ -9,7 +9,7 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Include config file
 include '../../dbconfig.php';
 
-if (empty($_POST["old_roomID"])) {
+if (empty($_POST["roomID"])) {
 	header("location: ../index.php");
 	exit;
 }
@@ -68,6 +68,7 @@ mysqli_close($link);
                         <label>Capacity</label>
                         <input type="number" id="capacity" name="capacity" min="0" class="form-control" value="<?php echo $capacity; ?>" />
                     </div>
+                    <input type="hidden" id="roomID" name="roomID" value="<?php echo $_POST["roomID"]; ?>" />
 					<input type="hidden" id="old_roomID" name="old_roomID" value="<?php echo $_POST["roomID"]; ?>" />
                     <input type="submit" value="Update" class="btn btn-primary" />
                     <input type="reset" class="btn btn-default" />
