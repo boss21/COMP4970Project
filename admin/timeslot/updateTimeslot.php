@@ -24,6 +24,9 @@ $sql = "SELECT Timeslot FROM Timeslots WHERE TimeslotID = '$timeslotID'";
 $result = mysqli_query($link, $sql);
 $row = mysqli_fetch_array($result);
 $timeslot = $row["Timeslot"];
+$timeslotArray = explode(" - ",$timeslot);
+$timeslotStart = date("H:i", strtotime($timeslotArray[0]));
+$timeslotEnd = date("H:i", strtotime($timeslotArray[1]));
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_timeslotID"])) {
 
@@ -91,14 +94,14 @@ mysqli_close($link);
                 <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
                     <div class="form-group <?php echo (!empty($timeslotStart_err)) ? "has-error" : ""; ?>">
                         <label>Timeslot Start</label>
-                        <input type="time" id="time_slot_start" name="time_slot_start" class="form-control" />
+                        <input type="time" id="time_slot_start" name="time_slot_start" value="<?php echo $timeslotStart; ?>" class="form-control" />
                         <span class="help-block" style="color:red;">
 						    <?php echo $timeslotStart_err; ?>
 						</span>
                     </div>
                     <div class="form-group <?php echo (!empty($timeslotEnd_err)) ? "has-error" : ""; ?>">
                         <label>Timeslot End</label>
-                        <input type="time" id="time_slot_end" name="time_slot_end" class="form-control" />
+                        <input type="time" id="time_slot_end" name="time_slot_end" value="<?php echo $timeslotEnd; ?>" class="form-control" />
                         <span class="help-block" style="color:red;">
 						    <?php echo $timeslotEnd_err; ?>
 						</span>
