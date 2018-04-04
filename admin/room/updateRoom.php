@@ -9,6 +9,11 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Include config file
 include '../../dbconfig.php';
 
+$room = "";
+$capacity = "";
+$room_err = "";
+$capacity_err = "";
+
 if (empty($_POST["roomID"])) {
 	header("location: ../index.php");
 	exit;
@@ -22,20 +27,34 @@ $room = $row["Room"];
 $capacity = $row["Capacity"];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_roomID"])) {
-    $room = $_POST["room_name"];
-    $sql = "SELECT Room FROM Rooms WHERE Room = '$room'";
-    $result = mysqli_query($link, $sql);
-	if (mysqli_num_rows($result) != 0) {
-		echo "<script>alert('$room already exists.');window.location.href='modifyRoom.php';</script>";
-	} else {
-        $roomID = $_POST["old_roomID"];
-        $room = $_POST["room_name"];
-        $capacity = $_POST["capacity"];
-        $sqlUpdate = "UPDATE Rooms SET Room = '$room', Capacity = '$capacity' WHERE RoomID = '$roomID'";
-        if (mysqli_query($link, $sqlUpdate)) {
-            echo "<script>alert('$room was successfully updated!');window.location.href='modifyRoom.php';</script>";
+
+    // Check if Room Name is empty
+    if (empty(trim($_POST["room_name"]))) {
+        $room_err = "Please enter Room Name.";
+    } else {
+        $room = trim($_POST["room_name"]);
+    }
+    
+    // Check if Capacity is empty
+    if (empty(trim($_POST["capacity"]))) {
+        $capacity_err = "Please enter Capacity.";
+    } else {
+        $capacity = trim($_POST["capacity"]);
+    }
+
+    if (empty($room_err) && empty($capacity_err)){
+        $sql = "SELECT Room FROM Rooms WHERE Room = '$room'";
+        $result = mysqli_query($link, $sql);
+        if (mysqli_num_rows($result) != 0) {
+            echo "<script>alert('$room already exists.');window.location.href='modifyRoom.php';</script>";
         } else {
-            echo "Oops! Something went wrong. Please try again later.";
+            $roomID = $_POST["old_roomID"];
+            $sqlUpdate = "UPDATE Rooms SET Room = '$room', Capacity = '$capacity' WHERE RoomID = '$roomID'";
+            if (mysqli_query($link, $sqlUpdate)) {
+                echo "<script>alert('$room was successfully updated!');window.location.href='modifyRoom.php';</script>";
+            } else {
+                echo "Oops! Something went wrong. Please try again later.";
+            }
         }
     }
 }
@@ -67,13 +86,19 @@ mysqli_close($link);
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <div class="form-group">
+                    <div class="form-group <?php echo (!empty($room_err)) ? "has-error" : ""; ?>">
                         <label>Room Name</label>
                         <input type="text" id="room_name" name="room_name" class="form-control" value="<?php echo $room; ?>" />
+                        <span class="help-block" style="color:red;">
+						    <?php echo $room_err; ?>
+						</span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group <?php echo (!empty($capacity_err)) ? "has-error" : ""; ?>">
                         <label>Capacity</label>
                         <input type="number" id="capacity" name="capacity" min="0" class="form-control" value="<?php echo $capacity; ?>" />
+                        <span class="help-block" style="color:red;">
+						    <?php echo $capacity_err; ?>
+						</span>
                     </div>
                     <input type="hidden" id="roomID" name="roomID" value="<?php echo $_POST["roomID"]; ?>" />
 					<input type="hidden" id="old_roomID" name="old_roomID" value="<?php echo $_POST["roomID"]; ?>" />
