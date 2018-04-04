@@ -7,7 +7,7 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
     exit;
 }
 // Include config file
-include '../../dbconfig.php';
+include '../dbconfig.php';
 
 $sql = "DELETE * FROM Forms";
 
