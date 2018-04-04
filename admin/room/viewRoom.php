@@ -42,7 +42,7 @@ mysqli_close($link);
 				<table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Room ID</th>
+                            <th>RoomID</th>
                             <th>Room Name</th>
                             <th>Capacity</th>
                         </tr>
