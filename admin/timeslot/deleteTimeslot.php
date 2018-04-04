@@ -9,23 +9,35 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Include config file
 include '../../dbconfig.php';
 
+$timeslotID = "";
+$timeslotID_err = "";
+
 $sql = "SELECT TimeslotID, Timeslot FROM Timeslots";
 $result = mysqli_query($link, $sql);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-   $timeslotID = $_POST["timeslotID"];
-   $sqlDelete = "DELETE FROM Timeslots WHERE TimeslotID = '$timeslotID'";
 
-   $sql = "SELECT Timeslot FROM Timeslots WHERE TimeslotID = '$timeslotID'";
-   $result = mysqli_query($link, $sql);
-   $row = mysqli_fetch_array($result);
-   $timeslot = $row["Timeslot"];
+    // Check if TimeslotID is empty
+    if (empty(trim($_POST["timeslotID"]))) {
+        $timeslotID_err = "There are no timeslots available to delete.";
+    } else {
+        $timeslotID = trim($_POST["timeslotID"]);
+    }
 
-   if (mysqli_query($link, $sqlDelete)){
-       echo "<script>alert('$timeslot was successfully deleted!');window.location.href='deleteTimeslot.php';</script>";
-   }else{
-       echo "Oops! Something went wrong. Please try again later.";
-   }
+    if (empty($timeslotID_err)){
+        $sqlDelete = "DELETE FROM Timeslots WHERE TimeslotID = '$timeslotID'";
+
+        $sql = "SELECT Timeslot FROM Timeslots WHERE TimeslotID = '$timeslotID'";
+        $result = mysqli_query($link, $sql);
+        $row = mysqli_fetch_array($result);
+        $timeslot = $row["Timeslot"];
+
+        if (mysqli_query($link, $sqlDelete)){
+            echo "<script>alert('$timeslot was successfully deleted!');window.location.href='deleteTimeslot.php';</script>";
+        }else{
+            echo "Oops! Something went wrong. Please try again later.";
+        }
+    }
 }
 mysqli_close($link);
 ?>
@@ -55,7 +67,7 @@ mysqli_close($link);
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <div class="form-group">
+                    <div class="form-group <?php echo (!empty($timeslotID_err)) ? "has-error" : ""; ?>">
                         <label>Timeslot</label>
                         <select id="timeslotID" name="timeslotID" class="form-control">
                             <?php
@@ -63,7 +75,10 @@ mysqli_close($link);
                                 echo "<option value='" . $row['TimeslotID'] . "'>" . $row['Timeslot'] . "</option>";
                             }
                             ?>
-						</select>
+                        </select>
+                        <span class="help-block" style="color:red;">
+						    <?php echo $timeslotID_err; ?>
+						</span>
                     </div>
                     <input type="submit" value="Delete" class="btn btn-primary" />
                     <input type="reset" class="btn btn-default" />
