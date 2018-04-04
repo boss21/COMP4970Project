@@ -9,9 +9,9 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Include config file
 include '../../dbconfig.php';
 
-if (empty($_POST["roomID"])) {
-	//header("location: ../index.php");
-	//exit;
+if (empty($_POST["old_roomID"])) {
+	header("location: ../index.php");
+	exit;
 }
 
 $roomID = $_POST["roomID"];
