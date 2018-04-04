@@ -9,8 +9,13 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Include config file
 include '../../dbconfig.php';
 
-$sql = "DELETE FROM Forms WHERE 1 = 1";
-$result = mysqli_query($link, $sql);
+$sql = "DELETE * FROM Forms";
+
+if (mysqli_query($link, $sql){
+    header("location: index.php");
+} else {
+    echo "Oops! Something went wrong. Please try again later.";
+}
 
 mysqli_close($link);
 ?>
