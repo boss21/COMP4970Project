@@ -9,25 +9,36 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Include config file
 include "../../dbconfig.php";
 
+$userID = "";
+$userID_err = "";
+
 if (empty($_POST["userID"])) {
 	header("location: ../index.php");
 	exit;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_userID"])) {
-    $userID = $_POST["userID"];
-    $sql = "SELECT UserID FROM Clients WHERE UserID = '$userID'";
-    $result = mysqli_query($link, $sql);
-    if (mysqli_num_rows($result) != 0) {
-        echo "<script>alert('$userID already exists.');window.location.href='modifyUser.php';</script>";
+
+    // Check if UserID is empty
+    if (empty(trim($_POST["userID"]))) {
+        $userID_err = "Please enter UserID.";
     } else {
+        $userID = trim($_POST["userID"]);
+    }
+
+    if (empty($userID_err)){
         $oldUserID = $_POST["old_userID"];
-        $userID = $_POST["userID"];
-        $sqlUpdate = "UPDATE Clients SET UserID = '$userID' WHERE UserID = '$oldUserID'";
-        if (mysqli_query($link, $sqlUpdate)) {
-            echo "<script>alert('$oldUserID was successfully updated to $userID!');window.location.href='modifyUser.php';</script>";
+        $sql = "SELECT UserID FROM Clients WHERE UserID = '$userID'";
+        $result = mysqli_query($link, $sql);
+        if (mysqli_num_rows($result) != 0 && $oldUserID != $userID) {
+            echo "<script>alert('$userID already exists.');window.location.href='modifyUser.php';</script>";
         } else {
-            echo "Oops! Something went wrong. Please try again later.";
+            $sqlUpdate = "UPDATE Clients SET UserID = '$userID' WHERE UserID = '$oldUserID'";
+            if (mysqli_query($link, $sqlUpdate)) {
+                echo "<script>alert('$oldUserID was successfully updated to $userID!');window.location.href='modifyUser.php';</script>";
+            } else {
+                echo "Oops! Something went wrong. Please try again later.";
+            }
         }
     }
 }
@@ -59,9 +70,12 @@ mysqli_close($link);
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <div class="form-group">
+                    <div class="form-group <?php echo (!empty($userID_err)) ? "has-error" : ""; ?>">
                         <label>UserID</label>
                         <input type="text" id="userID" name="userID" value="<?php echo $_POST['userID']; ?>" class="form-control"/>
+                        <span class="help-block" style="color:red;">
+						    <?php echo $userID_err; ?>
+						</span>
                     </div>
                     <input type="hidden" id="old_userID" name="old_userID" value="<?php echo $_POST["userID"]; ?>" />
                     <input type="submit" value="Update" class="btn btn-primary"/>

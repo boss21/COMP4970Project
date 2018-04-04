@@ -40,7 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_timeslotID"])) {
             echo "<script>alert('$timeslot already exists.');window.location.href='modifyTimeslot.php';</script>";
         } else {
             $timeslotID = $_POST["old_timeslotID"];
-            $timeslot = $_POST["time_slot"];
             $sqlUpdate = "UPDATE Timeslots SET Timeslot = '$timeslot' WHERE TimeslotID = '$timeslotID'";
             if (mysqli_query($link, $sqlUpdate)) {
                 echo "<script>alert('$timeslot was successfully updated!');window.location.href='modifyTimeslot.php';</script>";
@@ -87,6 +86,7 @@ mysqli_close($link);
                     </div>
                     <input type="hidden" id="timeslotID" name="timeslotID" value="<?php echo $_POST["timeslotID"]; ?>" />
 					<input type="hidden" id="old_timeslotID" name="old_timeslotID" value="<?php echo $_POST["timeslotID"]; ?>" />
+                    <input type="hidden" id="old_timeslot" name="old_timeslot" value="<?php echo $timeslot; ?>" />
                     <input type="submit" value="Update" class="btn btn-primary" />
                     <input type="reset" class="btn btn-default" />
                     <a href="../index.php" class="btn btn-danger">Cancel</a>
