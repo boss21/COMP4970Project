@@ -39,6 +39,7 @@ mysqli_close($link);
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
+                <a href="clearTimeslots.php" class="btn btn-primary" onclick="return confirm('Are you sure you want to clear all timeslots?');">Clear Timeslots</a>
 				<table class="table table-bordered">
                     <thead>
                         <tr>
