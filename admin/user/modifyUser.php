@@ -38,7 +38,7 @@ mysqli_close($link);
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <form action="updateUser.php" method="post">
                     <div class="form-group">
                         <label for="userID">UserID</label>
                         <select id="userID" name="userID" class="form-control">
@@ -48,10 +48,6 @@ mysqli_close($link);
                             }
                             ?>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label>UserID</label>
-                        <input type="text" id="userID" name="userID" class="form-control"/>
                     </div>
                     <input type="submit" value="Modify" class="btn btn-primary"/>
                     <input type="reset" class="btn btn-default"/>

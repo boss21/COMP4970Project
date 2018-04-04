@@ -71,13 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		<title>HeadCountApp</title>
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		
-		<!--
-   		/* Team: Red
-	 	* Group: Client
-	 	* Contributors: Jacob Hayes, Zeily Perez, Ian Marshall
-	 	*/
-		-->
 	</head>
 
 	<body>

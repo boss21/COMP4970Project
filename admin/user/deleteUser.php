@@ -10,13 +10,13 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 include "../../dbconfig.php";
 
 $sql = "SELECT UserID FROM Clients";
-$sqlQueryResult = mysqli_query($link, $sql);
+$result = mysqli_query($link, $sql);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userID = $_POST["userID"];
-    $deleteUserSql = "DELETE FROM Clients WHERE UserID = '$userID'";
+    $sqlDelete = "DELETE FROM Clients WHERE UserID = '$userID'";
 
-    if (mysqli_query($link, $deleteUserSql)) {
+    if (mysqli_query($link, $sqlDelete)) {
         echo "<script type='text/javascript'>alert('$userID successfully deleted!');</script>";
         header("location: deleteUser.php");
     } else {
@@ -53,8 +53,9 @@ mysqli_close($link);
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group">
                         <label for="userID">UserID</label>
-                        <select id="userID" name="userID" class="form-control"><?php
-                            while ($row = mysqli_fetch_array($sqlQueryResult)) {
+                        <select id="userID" name="userID" class="form-control">
+                            <?php
+                            while ($row = mysqli_fetch_array($result)) {
                                 echo "<option value='" . $row['UserID'] . "'>" . $row['UserID'] . "</option>";
                             }
                             ?>

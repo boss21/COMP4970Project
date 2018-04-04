@@ -6,33 +6,27 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
     header("location: login.php");
     exit;
 }
-
+// Include config file
 include '../../dbconfig.php';
 
-$sql1 = "SELECT Room FROM rooms";
-$result = mysqli_query($link,$sql1);
-$currentRooms = array();
-
-while ($row = mysqli_fetch_array($result)) {
-	$currentRooms[]=$row['Room'];
-}
-
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-   $room = $_POST["room_name"];
-	for ($i=0;$i<count($currentRooms);$i++){
-		if ($currentRooms[$i] === $room){
-			echo "<script type='text/javascript'>alert('$room is a name already in the database.');window.location.href='addRoom.php';</script>";
-			return false;
-		}
-	}
-   $capacity = $_POST["capacity"];
-   $sql2 = "INSERT INTO Rooms (Room, Capacity) VALUES ('$room', '$capacity')";
-   if (mysqli_query($link, $sql2)){
-       echo "<script type='text/javascript'>alert('$room successfully added with a capacity of $capacity.');</script>";
-   }else{
-       echo "<script type='text/javascript'>alert('Oops. Try Again Later.');</script>";
-   }
+    $room = $_POST["room_name"];
+    $sql = "SELECT Room FROM rooms";
+    $result = mysqli_query($link, $sql);
+	if (mysqli_num_rows($result) != 0){
+		echo "<script>alert('$room already exists.');window.location.href='addRoom.php';</script>";
+		return false;
+	} else {
+        $capacity = $_POST["capacity"];
+        $sqlAdd = "INSERT INTO Rooms (Room, Capacity) VALUES ('$room', '$capacity')";
+        if (mysqli_query($link, $sqlAdd)){
+            echo "<script>alert('$room successfully added with a capacity of $capacity.');</script>";
+        }else{
+            echo "Oops! Something went wrong. Please try again later.";
+        }
+    }
 }
+
 mysqli_close($link);
 ?>
 
@@ -60,7 +54,6 @@ mysqli_close($link);
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-center">
-                <br />
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="form-group">
                         <label>Room Name</label>
@@ -68,15 +61,12 @@ mysqli_close($link);
                     </div>
                     <div class="form-group">
                         <label>Capacity</label>
-                        <input type="number" id="capacity" name="capacity" min="0" class="form-control" />
+                        <input type="number" id="capacity" name="capacity" min="0" pattern="[0-9]" class="form-control" />
                     </div>
                     <input type="submit" name="submit" value="Add" class="btn btn-primary" />
-                    <br />
-                    <br />
                     <input type="reset" class="btn btn-default" />
+                    <a href="../index.php" class="btn btn-danger">Cancel</a>
                 </form>
-                <br />
-                <a href="../index.php" class="btn btn-danger">Cancel</a>
             </div>
             <div class="col-sm-4"></div>
         </div>
