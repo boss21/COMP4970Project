@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 	} else {
         $sqlAdd = "INSERT INTO Timeslots (Timeslot) VALUES ('$timeslot')";
         if (mysqli_query($link, $sqlAdd)){
-            echo "<script>alert('$timeslot successfully added!');</script>";
+            echo "<script>alert('$timeslot was successfully added!');</script>";
         }else{
             echo "Oops! Something went wrong. Please try again later.";
         }

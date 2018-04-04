@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $capacity = $_POST["capacity"];
         $sqlAdd = "INSERT INTO Rooms (Room, Capacity) VALUES ('$room', '$capacity')";
         if (mysqli_query($link, $sqlAdd)){
-            echo "<script>alert('$room successfully added with a capacity of $capacity.');</script>";
+            echo "<script>alert('$room was successfully added with a capacity of $capacity.');</script>";
         }else{
             echo "Oops! Something went wrong. Please try again later.";
         }

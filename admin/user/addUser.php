@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $sqlAdd = "INSERT INTO Clients (UserID) VALUE ('$userID')";
         if (mysqli_query($link, $sqlAdd)) {
-            echo "<script>alert('$userID successfully added!');</script>";
+            echo "<script>alert('$userID was successfully added!');</script>";
         } else {
             echo "Oops! Something went wrong. Please try again later.";
         }
