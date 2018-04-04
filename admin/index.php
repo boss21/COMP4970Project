@@ -36,7 +36,7 @@ include "../dbconfig.php";
             <div class="row">
                 <div class="col-sm-12 text-center">
                     <br/>
-                    <a href="clearForms.php" class="btn btn-primary" onclick="confirm(Are you sure you want to clear all forms?);"></a>
+                    <a href="clearForms.php" class="btn btn-primary" onclick="confirm(Are you sure you want to clear all forms?);">Clear Forms</a>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Users
