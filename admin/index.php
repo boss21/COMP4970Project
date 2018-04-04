@@ -73,7 +73,9 @@ include "../dbconfig.php";
                     <br/>
                     <div>
                         <h2>Room Headcounts</h2>
+                        <br/>
                         <a href="clearForms.php" class="btn btn-primary" onclick="confirm(Are you sure you want to clear all forms?);">Clear Forms</a>
+                        <br/>
                         <br/>
                         <table class="table table-bordered">
                             <?php
