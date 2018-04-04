@@ -21,13 +21,20 @@ $row = mysqli_fetch_array($result);
 $timeslot = $row["Timeslot"];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_timeslotID"])) {
-    $timeslotID = $_POST["old_timeslotID"];
     $timeslot = $_POST["time_slot"];
-    $sqlUpdate = "UPDATE Timeslots SET Timeslot = '$timeslot' WHERE TimeslotID = '$timeslotID'";
-    if (mysqli_query($link, $sqlUpdate)) {
-        echo "<script>alert('$timeslot was successfully updated!');window.location.href='modifyTimeslot.php';</script>";
-    } else {
-        echo "Oops! Something went wrong. Please try again later.";
+    $sql = "SELECT Timeslot FROM Timeslots WHERE Timeslot = '$timeslot'";
+    $result = mysqli_query($link, $sql);
+	if (mysqli_num_rows($result) != 0) {
+		echo "<script>alert('$timeslot already exists.');window.location.href='modifyTimeslot.php';</script>";
+	} else {
+        $timeslotID = $_POST["old_timeslotID"];
+        $timeslot = $_POST["time_slot"];
+        $sqlUpdate = "UPDATE Timeslots SET Timeslot = '$timeslot' WHERE TimeslotID = '$timeslotID'";
+        if (mysqli_query($link, $sqlUpdate)) {
+            echo "<script>alert('$timeslot was successfully updated!');window.location.href='modifyTimeslot.php';</script>";
+        } else {
+            echo "Oops! Something went wrong. Please try again later.";
+        }
     }
 }
 

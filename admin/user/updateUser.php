@@ -15,13 +15,20 @@ if (empty($_POST["userID"])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_userID"])) {
-    $oldUserID = $_POST["old_userID"];
     $userID = $_POST["userID"];
-    $sqlUpdate = "UPDATE Clients SET UserID = '$userID' WHERE UserID = '$oldUserID'";
-    if (mysqli_query($link, $sqlUpdate)) {
-        echo "<script>alert('$oldUserID was successfully updated to $userID!');window.location.href='modifyUser.php';</script>";
+    $sql = "SELECT UserID FROM Clients WHERE UserID = '$userID'";
+    $result = mysqli_query($link, $sql);
+    if (mysqli_num_rows($result) != 0) {
+        echo "<script>alert('$userID already exists.');window.location.href='modifyUser.php';</script>";
     } else {
-        echo "Oops! Something went wrong. Please try again later.";
+        $oldUserID = $_POST["old_userID"];
+        $userID = $_POST["userID"];
+        $sqlUpdate = "UPDATE Clients SET UserID = '$userID' WHERE UserID = '$oldUserID'";
+        if (mysqli_query($link, $sqlUpdate)) {
+            echo "<script>alert('$oldUserID was successfully updated to $userID!');window.location.href='modifyUser.php';</script>";
+        } else {
+            echo "Oops! Something went wrong. Please try again later.";
+        }
     }
 }
 

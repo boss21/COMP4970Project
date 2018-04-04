@@ -22,14 +22,21 @@ $room = $row["Room"];
 $capacity = $row["Capacity"];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["old_roomID"])) {
-    $roomID = $_POST["old_roomID"];
     $room = $_POST["room_name"];
-    $capacity = $_POST["capacity"];
-    $sqlUpdate = "UPDATE Rooms SET Room = '$room', Capacity = '$capacity' WHERE RoomID = '$roomID'";
-    if (mysqli_query($link, $sqlUpdate)) {
-        echo "<script>alert('$room was successfully updated!');window.location.href='modifyRoom.php';</script>";
-    } else {
-        echo "Oops! Something went wrong. Please try again later.";
+    $sql = "SELECT Room FROM Rooms WHERE Room = '$room'";
+    $result = mysqli_query($link, $sql);
+	if (mysqli_num_rows($result) != 0) {
+		echo "<script>alert('$room already exists.');window.location.href='modifyRoom.php';</script>";
+	} else {
+        $roomID = $_POST["old_roomID"];
+        $room = $_POST["room_name"];
+        $capacity = $_POST["capacity"];
+        $sqlUpdate = "UPDATE Rooms SET Room = '$room', Capacity = '$capacity' WHERE RoomID = '$roomID'";
+        if (mysqli_query($link, $sqlUpdate)) {
+            echo "<script>alert('$room was successfully updated!');window.location.href='modifyRoom.php';</script>";
+        } else {
+            echo "Oops! Something went wrong. Please try again later.";
+        }
     }
 }
 
