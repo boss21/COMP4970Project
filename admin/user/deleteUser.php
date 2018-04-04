@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sqlDelete = "DELETE FROM Clients WHERE UserID = '$userID'";
 
     if (mysqli_query($link, $sqlDelete)) {
-        echo "<script>alert('$userID successfully deleted!');window.location.href='deleteUser.php';</script>";
+        echo "<script>alert('$userID was successfully deleted!');window.location.href='deleteUser.php';</script>";
     } else {
         echo "Oops! Something went wrong. Please try again later.";
     }
