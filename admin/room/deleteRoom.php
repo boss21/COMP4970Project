@@ -13,13 +13,19 @@ $sql = "SELECT RoomID, Room FROM Rooms";
 $result = mysqli_query($link, $sql);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-   $roomID = $_POST["roomID"];
-   $sqlDelete = "DELETE FROM Rooms WHERE RoomID = '$roomID'";
-   if (mysqli_query($link, $sqlDelete)){
-       echo "<script>alert('successfully deleted!');window.location.href='deleteRoom.php';</script>";
-   }else{
-       echo "Oops! Something went wrong. Please try again later.";
-   }
+    $roomID = $_POST["roomID"];
+    $sqlDelete = "DELETE FROM Rooms WHERE RoomID = '$roomID'";
+
+    $sql = "SELECT Room FROM Rooms WHERE RoomID = '$roomID'";
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_array($result);
+    $room = $row["Room"];
+
+    if (mysqli_query($link, $sqlDelete)){
+        echo "<script>alert('$room was successfully deleted!');window.location.href='deleteRoom.php';</script>";
+    }else{
+        echo "Oops! Something went wrong. Please try again later.";
+    }
 }
 mysqli_close($link);
 ?>
