@@ -81,7 +81,7 @@ include "../dbconfig.php";
                             <?php
                                 $sql = "
                                 SELECT Rooms.RoomID, Rooms.Room, Timeslots.Timeslot, Forms.HeadcountType, Forms.HeadcountCount, Forms.UserID, Forms.Timestamp FROM Forms LEFT JOIN Rooms ON Forms.RoomID = Rooms.RoomID LEFT JOIN Timeslots ON Forms.TimeslotID = Timeslots.TimeslotID 
-                                ORDER BY RoomID, HeadcountType='End', HeadcountType='Middle', HeadcountType='Beginning'
+                                ORDER BY RoomID, TimeslotID, HeadcountType='End', HeadcountType='Middle', HeadcountType='Beginning'
                                 ";
 
                                 $result = mysqli_query($link, $sql);
