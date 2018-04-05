@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				<form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
 					<div class="form-group <?php echo (!empty($userID_err)) ? "has-error" : ""; ?>">
 						<label>UserID</label>
-						<input type="text" class="form-control" name="userID" id="userID" max="20">
+						<input type="text" id="userID" name="userID" maxlength="20" class="form-control" />
 						<span class="help-block" style="color:red;">
 							<?php echo $userID_err; ?>
 						</span>

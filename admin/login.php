@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
                         <div class="form-group <?php echo (!empty($username_err)) ? "has-error" : ""; ?>">
                             <label>Username:</label>
-                            <input type="text" class="form-control" name="username" id="username" max="20">
+                            <input type="text" id="username" name="username" maxlength="20" class="form-control" />
                             <span class="help-block" style="color:red;">
                                 <?php echo $username_err; ?>
                             </span>

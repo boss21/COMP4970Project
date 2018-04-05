@@ -76,7 +76,7 @@ mysqli_close($link);
                 <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
                     <div class="form-group <?php echo (!empty($room_err)) ? "has-error" : ""; ?>">
                         <label>Room Name</label>
-                        <input type="text" id="room_name" name="room_name" max="20" class="form-control" />
+                        <input type="text" id="room_name" name="room_name" maxlength="20" class="form-control" />
                         <span class="help-block" style="color:red;">
 						    <?php echo $room_err; ?>
 						</span>
